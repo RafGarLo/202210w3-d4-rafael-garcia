@@ -1,14 +1,16 @@
+import { watch } from 'fs';
 import { ISeries, SERIES } from '../models/series-data.js';
 import { Store } from '../services/storage.js';
 import { Component } from './component.js';
 
-export class SeriesPending extends Component {
+export class SeriesWatched extends Component {
   template!: string;
   series: Array<ISeries>;
   storeService: Store<ISeries>;
   constructor(public selector: string) {
     super();
-    this.storeService = new Store<ISeries>();
+    this.storeService = new Store('Serie');
+
     if (this.storeService.getStore().length === 0) {
       this.series = [...SERIES];
       this.storeService.setStore(this.series);
@@ -17,9 +19,10 @@ export class SeriesPending extends Component {
     }
     this.manageComponent();
   }
+
   manageComponent() {
     this.template = this.createTemplate();
-    this.render(this.selector, this.template);
+    this.renderAdd(this.selector, this.template);
     setTimeout(() => {
       document
         .querySelectorAll('.icon--delete')
@@ -30,45 +33,46 @@ export class SeriesPending extends Component {
   }
 
   createTemplate() {
-    const unwatched = this.series.filter((item) => item.watched === false);
-    let template = `<h2 class="section-title">Series list</h2>
-    <section class="series-pending">
-      <h3 class="subsection-title">Pending series</h3>
-      <p class="info">You have ${unwatched.length} series pending to watch</p>
-      <!--<p class="info">Congrats! You've watched all your series</p>-->`;
+    let watched = this.series.filter((item) => item.watched === true);
+    let template = `<section class="series-watched">
+                    <h3 class="subsection-title">Watched series</h3>
+                    <p class="info">You have ${watched.length} watched series</p>
+                    <ul class="series-list">;`;
+
     this.series.forEach((item: ISeries) => {
-      if (`${item.watched}`)
+      if (item.watched) {
         template += `
-      <li class="serie">
+<li class="serie">
             <img
               class="serie__poster"
               src="${item.poster}"
-              alt="${item.name}The Sopranos poster"
+              alt="The Sopranos poster"
             />
-            <h4 class="serie__title">${item.name}</h4>
-            <p class="serie__info">${item.creator} (${item.year})</p>
+            <h4 class="serie__title">The Sopranos</h4>
+            <p class="serie__info">${item.creator} (${item.year}</p>
             <ul class="score">
               <li class="score__star">
-                <i class="icon--score fas fa-star" title="1/5"></i>
+                <i class="icon-score far fa-star" title="1/5"></i>
               </li>
               <li class="score__star">
-                <i class="icon--score fas fa-star" title="2/5"></i>
+                <i class="icon-score far fa-star" title="2/5"></i>
               </li>
               <li class="score__star">
-                <i class="icon--score fas fa-star" title="3/5"></i>
+                <i class="icon-score far fa-star" title="3/5"></i>
               </li>
               <li class="score__star">
-                <i class="icon--score fas fa-star" title="4/5"></i>
+                <i class="icon-score far fa-star" title="4/5"></i>
               </li>
               <li class="score__star">
-                <i class="icon--score fas fa-star" title="5/5"></i>
+                <i class="icon-score far fa-star" title="5/5"></i>
               </li>
             </ul>
             <i class="fas fa-times-circle icon--delete"></i>
           </li>`;
+      }
     });
     template += `</ul>
-            </section>`;
+        </section>;`;
     return template;
   }
   handlerEraser(ev: Event) {
