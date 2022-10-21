@@ -17,8 +17,8 @@ export const SERIES = [
     year: 1999,
     poster:
       'https://m.media-amazon.com/images/M/MV5BZGJjYzhjYTYtMDBjYy00OWU1LTg5OTYtNmYwOTZmZjE3ZDdhXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg',
-    watched: true,
-    score: 5,
+    watched: false,
+    score: 0,
     emmies: 21,
   },
   {
@@ -40,7 +40,7 @@ export const SERIES = [
     poster:
       'https://pics.filmaffinity.com/Mad_Men_Serie_de_TV-351490728-large.jpg',
     watched: true,
-    score: 5,
+    score: 0,
     emmies: 116,
   },
   {
@@ -50,7 +50,7 @@ export const SERIES = [
     year: 2001,
     poster: 'https://www.cine.com/media/series/2711.jpg',
     watched: true,
-    score: 5,
+    score: 0,
     emmies: 53,
   },
   {
@@ -58,8 +58,8 @@ export const SERIES = [
     name: 'Atypical',
     creator: 'Robia Rashid',
     year: 2017,
-    poster: 'https://www.cine.com/media/series/2711.jpg',
-    watched: false,
+    poster: 'https://www.goldensword.net/images/series/caratula606.jpg',
+    watched: true,
     score: 0,
     emmies: 0,
   },
